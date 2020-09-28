@@ -7,7 +7,8 @@ process.on('uncaughtException', err => {
 })
 
 // Connecting env variables
-dotenv.config({ path: './config.env' });
+if(process.env.NODE_ENV === 'develpoment')
+  dotenv.config({ path: './config.env' });
 const app = require('./app');
 
 const DB = process.env.DATABASE.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);

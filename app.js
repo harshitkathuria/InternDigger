@@ -23,17 +23,17 @@ app.use(express.urlencoded({ limit: '10kb', extended: true }));
 app.use(cookieParser());
 
 // // Handle CORS
-// app.use(cors());
+app.use(cors());
 
-// app.options('*', cors());
+app.options('*', cors());
 
-// const limit = rateLimit({
-//   max: 100,
-//   windowMs: 60 * 60 * 60,
-//   message: 'Too many request with thi IP Address..Try again in 1 hour'
-// });
+const limit = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 60,
+  message: 'Too many request with thi IP Address..Try again in 1 hour'
+});
 
-// app.use('/interndigger/api', limit);
+app.use('/interndigger/api', limit);
 
 if(process.env.NODE_ENV === 'development')
   app.use(morgan('dev'));
