@@ -14,6 +14,8 @@ const errorHandler =  require('./controllers/errorController');
 
 const app = express();
 
+app.enable('trust proxy');
+
 // Parser JSON
 app.use(express.json());
 app.use(express.urlencoded({ limit: '10kb', extended: true }));

@@ -143,7 +143,8 @@ exports.logOut = catchAsync(async (req, res, next) => {
 
   res.cookie('jwt', token, {
     expires: new Date(Date.now() - 10 * 1000),
-    httpOnly: true
+    httpOnly: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
   });
 
   req.user = undefined;
@@ -180,7 +181,8 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   res.cookie('jwt', token, {
     expiresIn: process.env.COOKIE_EXPIRESIN * 24 * 60 * 60 * 1000,
-    httpOnly: true
+    httpOnly: true,
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
   })
 
   res.status(201).json({
