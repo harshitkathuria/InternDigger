@@ -23,6 +23,8 @@ export const post = async (data) => {
   }
 }
 
+const applyBtn = document.querySelector('.btn-apply');
+
 export const createResponse = async () => {
   try {
     const res = await axios({
@@ -44,6 +46,6 @@ export const createResponse = async () => {
     }
   } catch(err) {
     console.log(err.response.data.message);
-    showAlert('error', err.response.data.message);
+    showAlert('error', err);
   }
 }
