@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - InternDigger</title>
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
+<link rel="stylesheet" href="/css/main.css">
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/8ad2e12fec.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- navbar -->
+  <section class="user-nav">
+    <div class="container">
+      <%- include('_header') %>
+    </div>
+  </section>
+  
+  <!-- main-content -->
+
+  
+  <main id="userAbout" class="main">
+    <aside class="text-center">
+      <a href="/userHome" class="btn btn-large btn-main btn-up" style="color: black">Back To Dashboard</a>
+    </aside>
+    <div class="user-view">
+      <div class="user-view__menu">
+        <ul class="user__menu-list">
+          <li><a href="/me">Personal Details</a></li>
+          <li><a href="/me/appliedInterns">Applied Internships</a></li>
+          <li><a href="/me/changePassword">Change Password</a></li>
+        </ul>
+      </div>
+      <div class="user-view__content card">
+        <!-- Personal Details -->
+        <div id="personal" class="form-container" style="display: none;">
+          <h2 class="secondary-heading" style="font-size: 1.6rem;">Personal Details</h2>
+          <form class="form form-user-data" action="/submit-user-data" method="POST" style="width: 80%">
+            <div class="form__group">
+              <label class="form__label" for="name">Name</label>
+              <input class="form__input" id="name" type="text" value="<%=locals.user.name%>" required name="name">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="contactEmail">Email address</label>
+              <input class="form__input" id="contactEmail" type="email" value="<%=locals.user.email%>" required name="email">
+            </div>
+            <div class="form__group right">
+              <button id="updatePersonal" class="btn btn--small btn">Save settings</button>
+            </div>
+          </form>
+        </div>
+        <!-- <div class="line">&nbsp;</div> -->
+        <div id="changePassword" class="form-container" style="display: none;">
+          <h2 class="secondary-heading" style="font-size: 1.6rem;">Password change</h2>
+          <form class="form form-user-password">
+            <div class="form__group">
+              <label class="form__label" for="password-current">Current password</label>
+              <input class="form__input" id="password-current" type="password" placeholder="••••••••" required="" minlength="8">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="password">New password</label>
+              <input class="form__input" id="password" type="password" placeholder="••••••••" required="" minlength="8">
+            </div>
+            <div class="form__group ma-bt-lg">
+              <label class="form__label" for="password-confirm">Confirm password</label>
+              <input class="form__input" id="password-confirm" type="password" placeholder="••••••••" required="" minlength="8">
+            </div>
+            <div class="form__group right">
+              <button class="btn btn--small btn--green btn--save-password">Save password</button>
+            </div>
+          </form>
+        </div>
+        <!-- <div class="line">&nbsp;</div> -->
+        <!-- Applied Internship -->
+        <div id="appliedInterns" class="form-container applied" style="display: none;">
+          <h2 class="secondary-heading text-center" style="font-size: 1.6rem;">Applied Internships</h2>
+          <div class="card-wrapper">          
+            <% for(let i = 0; i < Math.min(responses.length, limit); i++) { %>
+              <div class="card">
+                <p class="company"><%=responses[i].vacancy.organization%></p>
+                <p class="position"><%=responses[i].vacancy.position%></p>
+                <p class="appliedDate"><%=responses[i].appliedAt.toLocaleDateString('en-US')%></p>
+                <p class="readmore"><a href="/vacancy/<%=responses[i].vacancy.jobID%>">Read More</a></p>
+              </div>
+            <% } %>
+            <%if(responses.length == 0) {%>
+              <div class="card">
+                <div class="card-content">
+                  <div class="row heading">
+                    <h3 class="">No Data Found </h3>
+                  </div>
+                </div>
+              </div>
+            <%}%>
+          </div>
+          <div id="get-responses" class="pagination">
+          <% for(let i = 1; i <= pageBtn_Res; i++) { %>    
+            <div class="btn btn-secondary btn-medium btn-page"><%= i%></div>
+          <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <%- include('_footer') %>
+
+  <script>
+    window.userID = '<%=locals.user.id%>';
+    window.userRole = '<%=locals.user.role%>';
+    if(document.getElementById('<%=content%>'))
+      document.getElementById('<%=content%>').style.display = 'block';
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="/js/main.bundle.js"></script>
+</body>
+</html>

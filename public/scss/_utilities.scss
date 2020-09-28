@@ -1,0 +1,257 @@
+.container {
+  max-width: 1300px;
+  padding: 0 1.5rem;
+  margin: auto;
+  overflow: hidden;
+}
+
+.main {
+  background-color: #f7f7f7;
+  padding: 8rem 6rem;
+  position: relative;
+}
+
+// Button
+.btn, %btn-shared {
+  display: inline-block;
+  padding: 0.2rem 1rem;
+  transition: all 0.5s;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn {
+
+  &-main {
+    @extend %btn-shared;
+    background-color: $main-color;
+  }
+
+  &-secondary {
+    @extend %btn-shared;
+    background-color: #ccc;
+  }
+
+  &-light {
+    @extend %btn-shared;
+    background-color: $light-color;
+  }
+
+  &-dark {
+    @extend %btn-shared;
+    background-color: $dark-color;
+  }
+
+  &-large {
+    @extend %btn-shared;
+    font-size: 1.3rem;
+    padding: 1rem 2rem;
+  }
+
+  &-block {
+    @extend %btn-shared;
+    padding: 0.7rem 2rem;
+    text-align: center;
+  }
+
+  &-medium {
+    @extend %btn-shared;
+    padding: 0.4rem 1.2rem;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  &-up {
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+  &.disabled {
+    
+    opacity: 0.7;
+    cursor: not-allowed;
+    // pointer-events: none;
+  }
+}
+
+
+// Backgrounds
+.bg {
+  &-main {
+    background: $main-color;
+    color: set-text-color($main-color);
+  }
+  &-dark {
+    background: $dark-color;
+    color: set-text-color($dark-color);
+  }
+  &-light {
+    background: $light-color;
+    color: set-text-color($light-color);
+  }
+  &-dark {
+    background: $dark-color;
+    color: set-text-color($dark-color);
+  }
+}
+
+.alert {
+
+  position: fixed;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  z-index: 100;
+  margin: 0 auto;
+  font-size: 1.7rem;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 1px;
+  -webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+  padding: 0.5rem 3rem;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: yellow;
+
+  &-success {
+    background-color: rgb(91, 224, 91);
+  }
+  &-error {
+    background-color: rgb(226, 97, 93);
+  }
+}
+
+.lead {
+  font-size: 1.3rem;
+  margin-bottom: 2rem; 
+}
+
+.quote-card {
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  border: 1px solid darkgrey;
+  width: 400px;
+  // height: 150px;
+  padding: 1.5rem;
+  position: relative;
+  font-size: 1.2rem; 
+  opacity: 0; 
+  transition: opacity 1s ease-in-out;
+  
+  small {
+    position: absolute;
+    right: 10px;
+  }
+
+  // &:nth-child(odd) {
+  //   transform: translateX(-1000px);        
+  // }
+  // &:nth-child(even) {
+  //   transform: translateX(1000px);        
+  // }
+}
+
+.text-center { text-align: center; }
+
+.py-1 { padding: 1rem 0; }
+
+.py-2 { padding: 2rem 0; }
+
+.py-3 { padding: 3rem 0; }
+
+.py-4 { padding: 4rem 0; }
+
+.my-1 { margin: 1rem 0; }
+
+.my-2 { margin: 2rem 0; }
+
+.my-3 { margin: 3rem 0; }
+
+.my-4 { margin: 4rem 0; }
+
+// Font size
+
+.secondary-heading {
+  font-size: 2.3rem;
+  margin-top: 0.8rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  text-shadow: 0 1px 1px black;
+  letter-spacing: 3px;
+}
+
+.m-heading {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.l-heading {
+  font-size: 2.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  display: block;
+  padding-bottom: 0.5rem;
+  text-align: center;
+  font-weight: 100;
+  text-transform: uppercase;
+}
+
+.overview-heading {
+  font-size: 6rem;
+  display: block;
+  padding-bottom: 1.5rem;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+// Bottom line
+.bottom-line {
+  height: 2px;
+  width: 3rem;
+  background: $main-color;
+  display: block;
+  margin: 0 auto 1rem auto
+}
+
+//divider
+.line {
+  margin: 6rem 0;
+  width: 100%;
+  height: 1px;
+  background-color: #e0e0e0;
+}
+
+// Cards orientation
+.cards {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.dropdown {
+  cursor: pointer;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.active-pageBtn {
+  border-color: rgb(226, 97, 93);
+  transform: scale(1.1);
+}

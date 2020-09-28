@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home - InternDigger</title>
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
+<link rel="stylesheet" href="/css/main.css">
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/8ad2e12fec.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- navbar -->
+  <section class="user-nav">
+    <div class="container">
+      <%- include('_header') %>
+    </div>
+  </section>
+  
+  <!-- main-content -->
+
+  
+  <main id="userAbout" class="main">
+    <div class="user-view">
+      <div class="user-view__menu">
+        <ul class="user__menu-list">
+          <li><a href="/me/postVacancy">Post Vacancy</a></li>
+          <li><a href="/me/getVacancies">Vacancies Posted</a></li>
+          <li><a href="/me">Personal Details</a></li>
+          <li><a href="/me/responses">Responses Recieved</a></li>
+          <li><a href="/me/changePassword">Change Password</a></li>
+        </ul>
+      </div>
+      <div class="user-view__content card">
+        <!-- Personal Details -->
+        <div id="personal" class="form-container" style="display: none;">
+          <h2 class="secondary-heading" action="/submit-user-data" method="POST" style="font-size: 1.6rem;">Personal Details</h2>
+          <form class="form form-user-data" style="width: 80%">
+            <div class="form__group">
+              <label class="form__label" for="name">Name</label>
+              <input class="form__input" id="name" type="text" value="<%=locals.user.name%>" required name="name">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="contactEmail">Email address</label>
+              <input class="form__input" id="contactEmail" type="email" value="<%=locals.user.email%>" required name="email">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="org">Organization</label>
+              <input class="form__input" id="org" type="text" value="<%=locals.user.organization%>" required name="org">
+            </div>
+            <div class="form__group right">
+              <button id="updatePersonal" class="btn btn--small btn">Save settings</button>
+            </div>
+          </form>
+        </div>
+        <!-- Get Responses -->
+        <div id="responses" class="form-container applied" style="display: none;">
+          <h2 class="secondary-heading text-center" style="font-size: 1.6rem;">Responses Recieved</h2>
+          <div class="card-wrapper">          
+            <% for(let i = 0; i < Math.min(responses.length, limit) && responses[i].vacancy != null; i++) { %>
+              <div class="card">
+                <p class="name"><%=responses[i].user.name%></p>
+                <p class="email"><%=responses[i].user.email%></p>
+                <p class="appliedDate"><%=responses[i].appliedAt.toLocaleDateString('en-US')%></p>
+                <p class="readmore"><a href="/vacancy/<%=responses[i].vacancy.jobID%>">Read More</a></p>
+              </div>
+            <% } %>
+            <%if(responses.length == 0) {%>
+              <div class="card">
+                <div class="card-content">
+                  <div class="row heading">
+                    <h3>No Data Found </h3>
+                  </div>
+                </div>
+              </div>
+            <%}%>
+          </div>
+          <div id="get-responses" class="pagination">
+          <% for(let i = 1; i <= pageBtn_Res; i++) { %>    
+            <div class="btn btn-secondary btn-medium btn-page"><%=i%></div>
+          <% } %>
+          </div>
+        </div>
+        <!-- Get Posted Vacancy -->
+        <div id="getVacancies" class="form-container applied" style="display: none;">
+          <h2 class="secondary-heading text-center" style="font-size: 1.6rem;">Vacancies Posted</h2>
+          <div class="card-wrapper">          
+            <% for(let i = 0; i < Math.min(vacancies.length, limit); i++) { %>
+              <div class="card">
+                <!-- <p class="jobID"><%=vacancies[i].jobID%></p> -->
+                <p class="position"><%=vacancies[i].position%></p>
+                <p class="appliedDate"><%=vacancies[i].postedOn.toLocaleDateString('en-US')%></p>
+                <p class="readmore"><a href="/vacancy/<%=vacancies[i].jobID%>">Read More</a></p>
+                <p class="delete"><a href="/vacancy/<%=vacancies[i].jobID%>">Delete Vacancy <i class="fas fa-times-circle"></i></a></p>
+              </div>
+            <% } %>
+            <%if(vacancies.length == 0) {%>
+              <div class="card">
+                <div class="card-content">
+                  <div class="row heading">
+                    <h3>No Data Found </h3>
+                  </div>
+                </div>
+              </div>
+            <%}%>
+          </div>
+          <div id="posted-vacancies-page" class="pagination">
+          <% for(let i = 1; i <= pageBtn_Vac; i++) { %>    
+            <div class="btn btn-secondary btn-medium btn-page"><%=i%></div>
+          <% } %>
+          </div>
+        </div>
+        <!-- <div class="line">&nbsp;</div> -->
+        <!-- Change Password -->
+        <div id="changePassword" class="form-container" style="display: none;">
+          <h2 class="secondary-heading" style="font-size: 1.6rem;">Password change</h2>
+          <form class="form form-user-password">
+            <div class="form__group">
+              <label class="form__label" for="password-current">Current password</label>
+              <input class="form__input" id="password-current" type="password" placeholder="••••••••" required="" minlength="8">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="password">New password</label>
+              <input class="form__input" id="password" type="password" placeholder="••••••••" required="" minlength="8">
+            </div>
+            <div class="form__group ma-bt-lg">
+              <label class="form__label" for="password-confirm">Confirm password</label>
+              <input class="form__input" id="password-confirm" type="password" placeholder="••••••••" required="" minlength="8">
+            </div>
+            <div class="form__group right">
+              <button id="savePassword" class="btn btn--small btn--green btn--save-password">Save password</button>
+            </div>
+          </form>
+        </div>
+        <!-- <div class="line">&nbsp;</div> -->
+        <!-- Post Opportunity -->
+        <div id="postVacancy" class="form-container" style="display: none;">
+          <h2 class="secondary-heading" style="font-size: 1.6rem;">Post Vacancy</h2>
+          <form class="form form-company-data" style="width: 80%">
+            
+            <div class="form__group">
+              <label class="form__label" for="jobID">JobID</label>
+              <input class="form__input" id="jobID" type="number" placeholder="11111" required name="jobID">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="position">Position</label>
+              <input class="form__input" id="position" type="text" placeholder="SDE" required name="position">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="stipend">Stipend (Rs.)</label>
+              <input class="form__input" id="stipend" type="number" placeholder="3000" required name="stipend">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="type">Type</label>
+              <input class="form__input" id="type" type="text" placeholder="Full Time" required name="type">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="org-name">Organization</label>
+              <input class="form__input" id="org-name" type="text" value="Glasify Pvt. Ltd." name="org-name" disabled>
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="duration">Duration</label>
+              <input class="form__input" id="duration" type="text" placeholder="6 months" required name="duration">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="city">City</label>
+              <input class="form__input" id="city" type="text" placeholder="New Delhi" required name="city">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="last-date">Last Date To Apply</label>
+              <input class="form__input" id="last-date" type="text" placeholder="<%=new Date().toString().substr(4, 11)%>" required name="last-date">
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="cover-info">Cover Info</label>
+              <textarea name="cover-info" id="cover-info" class="form__input" required style="height: 100px"></textarea>
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="description">Description</label>
+              <textarea name="description" id="description" class="form__input" required></textarea>
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="email">Email address</label>
+              <input class="form__input" id="email" type="email" value="<%=locals.user.email%>" required name="email" disabled>
+            </div>
+            <div class="form__group right">
+              <button id="btn-post" class="btn btn--small btn-post btn-up">Post</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <%- include('_footer') %>
+
+  <script>
+    window.userID = '<%=locals.user.id%>';
+    window.userRole = '<%=locals.user.role%>';
+    window.userEmail = '<%=locals.user.email%>';
+    if(document.getElementById('<%=content%>'))
+      document.getElementById('<%=content%>').style.display = 'block';
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="/js/main.bundle.js"></script>
+</body>
+</html>

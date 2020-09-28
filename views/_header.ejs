@@ -1,0 +1,24 @@
+<!-- navbar -->
+<nav id="main-nav" class="py-1">
+  <div class="nav--logo">
+    <% if(locals.user) { %>
+      <% if(locals.user.role === 'candidate') {%>
+        <a href="/userHome">ID</a>
+      <%} else {%>
+        <a href="/me">ID</a>
+      <%}%>
+    <% } else { %>
+      <a href="/">ID</a>
+    <% } %>
+  </div>
+  <ul class="list nav--list">
+    <% if(!locals.user) { %>
+      <li><a href="login" class="btn">Log In</a></li>
+      <li><a href="#section-c" class="btn">Sign Up</a></li>
+    <% } else { %>
+      <li><a href="/me" class="btn" style="text-transform: capitalize;"><%= user.name%></a></li>
+      <li><a class="btn logout">Log Out</a></li>
+    <% } %>
+    <!-- <li><a href="/contact" class="btn">Contact Us</a></li> -->
+  </ul>
+</nav>

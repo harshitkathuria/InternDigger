@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InternDigger | Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
+  <script src="https://kit.fontawesome.com/8ad2e12fec.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body style="background-color: #f0f2f5;">
+  
+    <section class="login-category py-3 container">
+      <div class="section-title">InternDigger</div>
+      <div class="category-overview">
+        <p class="category"><%=category%></p>
+        <p class="category-subtitle"><%=category_subtitle%></p>
+      </div>
+      </div>
+    </section>
+
+  <section class="card">
+    <div class="card-heading lead"><%=heading%></div>
+    <form class='login-form'>
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" placeholder="Enter your email" required>
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" placeholder="Enter your password" required>
+      <button type="submit" class="btn btn-large">LOGIN</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <%-include('_footer')%>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="/js/main.bundle.js"></script>
+</body>
+</html>

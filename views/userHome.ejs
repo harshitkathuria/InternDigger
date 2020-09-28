@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home - InternDigger</title>
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
+<link rel="stylesheet" href="/css/main.css">
+<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/8ad2e12fec.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="loader" style="display: none;">
+    <img src="./img/loading.gif">
+  </div>
+
+  <!-- navbar -->
+  <section class="user-nav">
+    <div class="container">
+      <%- include('_header') %>
+    </div>
+  </section>
+  
+  <!-- main container -->
+  <main class="main">
+    <h2 class="secondary-heading text-center my-4">Find Your Perfect Internship</h2>
+    <div class="bottom-line"></div>
+    <div class="user-view">
+      <div class="user-view__menu">
+        <h2 class="m-heading">Filter By <i class="fas fa-filter"></i></h2>
+          <ul class="filter-list">
+            <li class="filter-options">
+              <span class="dropdown">Type 
+                <i class="fas fa-chevron-up"></i>
+                <i style="display: none;" class="fas fa-chevron-down"></i>
+              </span>
+              <ul class="filter-suboptions-list" style="display: none">
+                <li class="filter-suboptions">
+                  <input type="radio" name="type" id="full-time" value="Full Time">
+                  <label for="full-time">Full Time</label>
+                </li>
+                <li class="filter-suboptions">
+                  <input type="radio" name="type" id="part-time" value="Part Time">
+                  <label for="part-time">Part Time</label>
+                </li>
+              </ul>
+            </li>
+            <li class="filter-options">Position
+              <input id="filter-position" type="text" name="filter-position" placeholder="Enter Job Position">
+              <!-- <i class="fas fa-search"></i> -->
+            </li>
+            <li class="filter-options">City
+              <input id="filter-city" type="text" name="filter-city" placeholder="Enter City">
+              <!-- <i class="fas fa-city"></i> -->
+            </li>
+            <li class="submit-btns">
+                <button type="submit" class="btn btn-filter btn-large my-2">Save</button>
+                <button type="submit" class="btn btn-filter btn-large my-2">Clear</button>
+            </li>
+          </ul>
+      </div>
+      <div class="user-view__content">
+        <div class="card-wrapper">
+          <% for(let i = 0; i < Math.min(vacancies.length, limit); i++) { %>
+            <div class="card">
+              <div class="card-content">
+                <div class="row heading">
+                  <h3 class="position"><%= vacancies[i].position%></h3>
+                  <span class="lead posted"><%= vacancies[i].organization%></span>
+                </div>
+                <p class="summary"><%= vacancies[i].summary%></p>
+                <div class="details"><a href="/vacancy/<%= vacancies[i].jobID%>">Read More</a></div>
+              </div>
+            </div>
+          <% } %>  
+        </div>
+        <div class="pagination">
+          <% for(let i = 1; i <= pageBtn; i++) { %>    
+            <div class="btn btn-secondary btn-medium btn-page"><%= i%></div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </main>
+
+   <!-- Footer -->
+   <%- include('_footer') %>
+   <script>
+     window.userRole = '<%=locals.user.role%>';
+   </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="/js/main.bundle.js"></script>
+</body>
+</html>
