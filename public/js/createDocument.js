@@ -6,7 +6,7 @@ export const post = async (data) => {
   try{
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/interndigger/api/v1/vacancy',
+      url: '/interndigger/api/v1/vacancy',
       data
     })
     if(res.data.status === 'success') {
@@ -29,7 +29,7 @@ export const createResponse = async () => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/interndigger/api/v1/response',
+      url: '/interndigger/api/v1/response',
       data: {
         vacancy: window.vacancyID,
       }

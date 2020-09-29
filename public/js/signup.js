@@ -4,7 +4,7 @@ export const signup = async (data) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://127.0.0.1:3000/interndigger/api/v1/users/signup',
+      url: '/interndigger/api/v1/users/signup',
       data
     });
   
