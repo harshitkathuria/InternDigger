@@ -92,7 +92,7 @@
                 <p class="position"><%=vacancies[i].position%></p>
                 <p class="appliedDate"><%=vacancies[i].postedOn.toLocaleDateString('en-US')%></p>
                 <p class="readmore"><a href="/vacancy/<%=vacancies[i].jobID%>">Read More</a></p>
-                <p class="delete"><a href="/vacancy/<%=vacancies[i].jobID%>">Delete Vacancy <i class="fas fa-times-circle"></i></a></p>
+                <p id="<%=vacancies[i]._id%>" class="deleteVacancy" style="cursor: pointer;">Delete Vacancy <i class="fas fa-times-circle"></i></a></p>
               </div>
             <% } %>
             <%if(vacancies.length == 0) {%>

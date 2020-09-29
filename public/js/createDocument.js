@@ -6,7 +6,7 @@ export const post = async (data) => {
   try{
     const res = await axios({
       method: 'POST',
-      url: '/interndigger/api/v1/vacancy',
+      url: 'http://127.0.0.1:3000/interndigger/api/v1/vacancy',
       data
     })
     if(res.data.status === 'success') {
@@ -29,7 +29,7 @@ export const createResponse = async () => {
   try {
     const res = await axios({
       method: 'POST',
-      url: '/interndigger/api/v1/response',
+      url: 'http://127.0.0.1:3000/interndigger/api/v1/response',
       data: {
         vacancy: window.vacancyID,
       }
@@ -42,7 +42,6 @@ export const createResponse = async () => {
       
       showAlert('success', 'You have Applied for this internship')
       window.setTimeout(() => window.location.reload(), 2000);
-      ('response created')
     }
   } catch(err) {
     console.log(err.response.data.message);

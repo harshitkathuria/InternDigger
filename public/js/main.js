@@ -5,6 +5,7 @@ import { signup } from './signup';
 import { updateUserData, updateUserPassword } from './updateUser';
 import { post, createResponse } from './createDocument';
 import { loadContentPageWise } from './loadPage';
+import { deleteVacancy } from './deleteDocument';
 
 // DOM
 const loginForm = document.querySelector('.login-form');
@@ -101,6 +102,17 @@ if(postBtn) {
     vacancyAttrib.city = document.getElementById('city').value;
     post(vacancyAttrib);
   })
+}
+
+// DELETE VACANCY
+
+const deleteBtn = document.querySelectorAll('.deleteVacancy');
+if(deleteBtn) {
+  deleteBtn.forEach(el => el.addEventListener('click', e => {
+    console.log('delete');
+    const id = el.id;
+    deleteVacancy(id);
+  }))
 }
 
 // Create Response

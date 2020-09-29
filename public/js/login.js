@@ -4,7 +4,7 @@ export const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: '/interndigger/api/v1/users/login',
+      url: 'http://127.0.0.1:3000/interndigger/api/v1/users/login',
       data: {
         email,
         password
@@ -30,7 +30,7 @@ export const logOut = async () => {
   try {
     const res = await axios({
       method: 'GET',
-      url: '/interndigger/api/v1/users/logout'
+      url: 'http://127.0.0.1:3000/interndigger/api/v1/users/logout'
     });
 
     if(res.data.status === 'success') {

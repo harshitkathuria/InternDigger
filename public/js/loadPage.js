@@ -6,7 +6,7 @@ const loadPageBtn = async (Model, query = '') => {
   try {
     const res = await axios({
       method: 'GET',
-      url: `/interndigger/api/v1/${Model}/?${query}`
+      url: `http://127.0.0.1:3000/interndigger/api/v1/${Model}/?${query}`
     });
 
     if(res.data.status === 'success') {
@@ -55,10 +55,10 @@ export const loadContentPageWise = async (Model, filter, pageNum = 1, subModel, 
     }
     let url = '';
     if(Model == 'users') {
-      url = `/interndigger/api/v1/${Model}/${window.userID}/?page=${pageNum}&limit=5&${query}`
+      url = `http://127.0.0.1:3000/interndigger/api/v1/${Model}/${window.userID}/?page=${pageNum}&limit=5&${query}`
     }
     else 
-      url = `/interndigger/api/v1/${Model}/?page=${pageNum}&limit=5&${query}`
+      url = `http://127.0.0.1:3000/interndigger/api/v1/${Model}/?page=${pageNum}&limit=5&${query}`
     const res = await axios({
       method: 'GET',
       url
