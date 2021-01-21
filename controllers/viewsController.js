@@ -138,3 +138,11 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
   })
   next();
 });
+
+// Confirm Email
+exports.confirmEmail = catchAsync(async (req, res, next) => {
+  res.status(200).render('error', {
+    title: 'Verify your email',
+    msg: 'Please verify your email address by clicking on the link sent to your email address.'
+  })
+})
