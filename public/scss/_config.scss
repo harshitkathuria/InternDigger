@@ -4,6 +4,9 @@ $main-color: #ffbc00;
 $light-color: #f4f4f4;
 $medium-color: #ccc;
 $dark-color: #333;
+$md1: 769px;
+$md2: 426px;
+$md3: 326px;
 
 //Set text Color
 @function set-text-color($color) {
