@@ -9,12 +9,9 @@ export const signup = async (data) => {
     });
   
     if(res.data.status === 'success') {
-      showAlert('success', 'Acoount Created');
+      showAlert('success', 'Account Created');
       window.setTimeout(() => {
-        if(res.data.data.user.role === 'candidate')
-          location.assign('/userHome');
-        else 
-          location.assign('/me')
+        location.assign('/confirmEmail')
       }, 1500);
     }
   } catch(err) {

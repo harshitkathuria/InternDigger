@@ -14,7 +14,7 @@
   <ul class="list nav--list">
     <% if(!locals.user) { %>
       <li><a href="login" class="btn">Log In</a></li>
-      <li><a href="#section-c" class="btn">Sign Up</a></li>
+      <li><a href="/#section-c" class="btn">Sign Up</a></li>
     <% } else { %>
       <li><a href="/me" class="btn" style="text-transform: capitalize;"><%= user.name%></a></li>
       <li><a class="btn logout">Log Out</a></li>

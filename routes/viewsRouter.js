@@ -4,6 +4,8 @@ const authController = require('../controllers/authController');
 
 const Router =  express.Router();
 
+// Confirm Email
+Router.get('/confirmEmail', viewsController.confirmEmail);
 // Landing page
 Router.get('/', authController.isLoggedIn, viewsController.getOverview);
 // Login page

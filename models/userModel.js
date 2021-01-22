@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
       'Please provide your Organization Name'
     ]
   },
+  confirm: {
+    type: Boolean,
+    default: false
+  },
   password: {
     type: String, 
     required: [true, 'Please provide your password'],

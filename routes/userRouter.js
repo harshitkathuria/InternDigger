@@ -9,6 +9,8 @@ Router.post('/signup/:role', authController.signUp);
 Router.post('/login', authController.login);
 Router.get('/logout', authController.logOut);
 
+Router.get('/confirmEmail/:token', authController.confirmEmail);
+
 Router.use(authController.protect);
 
 Router.route('/')

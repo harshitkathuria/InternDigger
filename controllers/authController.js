@@ -3,6 +3,14 @@ const bcrypt = require('bcrypt');
 const User = require('../models/userModel');
 const catchAsync = require('../util/catchAsync');
 const AppError = require('../util/appError');
+const Email = require('../util/email');
+
+// Create email verification link
+function EmailVerfication(id) {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: '1d'
+  })
+}
 
 // Signup function
 exports.signUp = catchAsync(async (req, res) => {
@@ -13,23 +21,16 @@ exports.signUp = catchAsync(async (req, res) => {
     req.body.organization = undefined;
 
   const user = await User.create(req.body);
-  // Signing JWT
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRESIN
-  });
 
-  const cookieOptions = {
-    expires: process.env.COOKIEIN * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-    // secure: true
-  }
-
-  res.cookie('jwt', token, cookieOptions);
+  // Confirm Emamil Token
+  const emailToken = EmailVerfication(user.id);
+  // Confirm Email URL
+  const url = `${req.protocol}://${req.get('host')}/interndigger/api/v1/users/confirmEmail/${emailToken}`;
+  await new Email(user, url).verifyEmail();
 
   res.status(201).json({
     status: 'success',
     data: {
-      token,
       user
     }
   })
@@ -43,6 +44,11 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Please provide both email and password', 400));
   }
   const user = await User.findOne({ email }).select('+password');
+
+  // Checking if the email is verified or not
+  if(!user.confirm) {
+    return next(new AppError('Please verify your email first', 401));
+  }
 
   if(!user || !await user.verifyPassword(password, user.password)) {
     res.status(400).json({
@@ -94,6 +100,11 @@ exports.protect = catchAsync(async (req, res, next) => {
   const user = await User.findById(decoded.id);
   if(!user)
     return next(new AppError('User does not exist', 401));
+
+  // Checking if the email is verified or not
+  if(!user.confirm) {
+    return next(new AppError('Please verify your email first ', 401));
+  }
 
   // Check is password is changed before isssue of jwt token
   if(user.compareChangedPasswordTime(decoded.iat))
@@ -190,5 +201,23 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     data: {
       user
     }
+  })
+})
+
+// Confirm email
+exports.confirmEmail = catchAsync( async (req, res, next) => {
+  const token = req.params.token;
+
+  // Verify token
+  const decoded = jwt.decode(token, process.env.JWT_SECRET);
+
+  // Check is user exists or not
+  const user = await User.findByIdAndUpdate(decoded.id, { confirm: true } );
+  if(!user)
+    return next(new AppError('User does not exist', 401));
+
+  res.status(200).render('error', {
+    title: 'Email verified',
+    msg: 'Please login to continue'
   })
 })
